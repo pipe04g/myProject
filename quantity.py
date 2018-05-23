@@ -1,38 +1,59 @@
 class unit:
     def __init__(self,type='L',mult=0):
-        self.type = type
+        self.check(type)    
         self.mult = mult;
         self.SI = 1
-        self.check()
         self.pre()
     def __str__(self):
         return self.name
     def __repr__(self):
         return self.LongName
-    def check(self):
-        SI = {'L': 'm', 'F': 'N', 'M': 'g','T':'°C','t':'s','s':'Pa'}        
+    def check(self,type):
+        SI = {'L': 'm', 'F': 'N', 'M': 'g','T':'°C','t':'s','s':'Pa'}
+        SIL = {'L': 'meters', 'F': 'Newton', 'M': 'gramo','T':'°C','t':'second','s':'Pa'}
+
+        if type in SI:
+            self.type = type
+        else:
+            self.type = 'L'
+            for clave, valor in SI.items():
+                print(valor)
+                if type is valor:   
+                    self.type = clave        
         self.unit = SI[self.type]
-        self.LongName = 'meters'
+        self.LongName = SIL[self.type]
         return 
     def pre(self):
         pre ={}
         if self.SI:
             pre['L'] = {-3:'m',-2:'c',0:'',3:'k'}
             pre['F'] = {0:'',3:'k'}
-            pre['M'] = {0:'',3:'k'}            
-            pre['T'] = {0:''}            
-            pre['t'] = {0:''}
+            pre['M'] = {0:'',3:'k'}    
             pre['s'] = {0:'',3:'k',6:'M',9:'G'}
         else:
-            pre['L'] = {0:''}
-        self.name = pre[self.type][self.mult]+self.unit
+            pass
+        try:
+            text = pre[self.type][self.mult]
+        except KeyError:
+            text =''
+        self.name = text+self.unit
 
 
-
+def cu(value):
+    a = value.find(' ')
+    val = value[0:a]
+    uni = value[a+1:len(value)]
+    print(val)
+    print(uni)
 class quantity:
-    def __init__(self,value=0,unit = unit()):
+    def __init__(self,value=0,U = unit()):
+        if isinstance(value,str):
+            a = value.find(' ')
+            U = unit(value[a+1:len(value)])
+            value = float(value[0:a])
+            
         self.value = value
-        self.unit = unit
+        self.unit = U
     def m(self):
         return self.unit.mult
     def e(self):
@@ -70,11 +91,13 @@ class quantity:
     
 
 
-a = quantity(10.3)
+a = quantity('10.3 m')
 c = quantity(20,unit('s',6))
 b = quantity(25,unit('L',-3))
+c = quantity(25,unit('L',-3))
 print(a)
 print(b)
 print(a+b)
+
  
 
