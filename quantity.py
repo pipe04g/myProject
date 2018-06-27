@@ -4,10 +4,17 @@ class unit:
         self.mult = mult;
         self.SI = 1
         self.pre()
+        self.e = 1
     def __str__(self):
-        return self.name
+        a = ''
+        if self.e != 1
+            a = str(self.e)
+        return self.name+a
     def __repr__(self):
-        return self.LongName
+        a = ''
+        if self.e != 1
+            a = str(self.e)
+        return self.LongName+a
     def check(self,type):
         SI = {'L': 'm', 'F': 'N', 'M': 'g','T':'°C','t':'s','s':'Pa'}
         SIL = {'L': 'meters', 'F': 'Newton', 'M': 'gramo','T':'°C','t':'second','s':'Pa'}
@@ -86,7 +93,22 @@ class quantity:
     __radd__ = __add__      
     def __sub__(self,B):
         return ans
-
+    def __mul__(self,a):
+        if type(a) is quantity:
+            if self.uType() is a.uType():
+                m1 = self.m()
+                m2 = a.m()
+                if m1>m2:
+                    m = m1
+                    unit = self.unit
+                else:
+                    m = m2
+                    unit = a.unit
+                    unit.e = a.unit.e + self.unit.e
+                value = self.e()*a.e()
+                value = eval("%fe%d"% (value,-m))
+                ans = quantity(value,unit)
+        return ans
     
     
 
@@ -98,6 +120,3 @@ c = quantity(25,unit('L',-3))
 print(a)
 print(b)
 print(a+b)
-
- 
-
