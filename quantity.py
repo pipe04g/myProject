@@ -1,3 +1,8 @@
+class Unit:
+    def __init__(self):
+        
+
+
 class unit:
     def __init__(self,type='L',mult=0):
         self.check(type)    
