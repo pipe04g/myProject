@@ -1,4 +1,7 @@
 class Unit:
+    Units = {1:{0:'', 1:'m', 2:'cm', 3:'mm', 4:'km', 5:'ft', 6:'in'},
+             2:{0:'', 1:'N', 2:'kN', 3:'kgf', 4:'lb', 5:'klb'},
+             3:{0:'', 1:'kg', 2:'slug'}}
     def __init__(self):
         
 
