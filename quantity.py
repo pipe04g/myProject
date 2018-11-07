@@ -21,7 +21,7 @@ class Unit:
             elif self.code[1][x]<0:
                 text2 =+ ' '+self.code[0][x]+n;
         
-        text = 
+        text = text +'/'+text2
         return text
         
 
