@@ -1,8 +1,21 @@
 class Unit:
-    Units = {1:{0:'', 1:'m', 2:'cm', 3:'mm', 4:'km', 5:'ft', 6:'in'},
-             2:{0:'', 1:'N', 2:'kN', 3:'kgf', 4:'lb', 5:'klb'},
-             3:{0:'', 1:'kg', 2:'slug'}}
+    Units = {0:{0:'', 1:'m', 2:'cm', 3:'mm', 4:'km', 5:'ft', 6:'in'},
+             1:{0:'', 1:'N', 2:'kN', 3:'kgf', 4:'lb', 5:'klb'},
+             2:{0:'', 1:'kg', 2:'slug'},
+             3:{0:'', 1:'seg'},
+             4:{0:'', 1:'°C', 2:'°F'}
+             }
+    
     def __init__(self):
+        self.code = [[0,0,0,0,0],[0,0,0,0,0]]
+    
+    __str__(self):
+        for x in range(0,4):
+            if self.code[1][x]
+            
+        
+        text = 
+        return text
         
 
 
