@@ -10,9 +10,16 @@ class Unit:
         self.code = [[0,0,0,0,0],[0,0,0,0,0]]
     
     __str__(self):
+        text = ''
+        text2 =''
         for x in range(0,4):
-            if self.code[1][x]
-            
+            n = ''
+            if abs(self.code[1][x])>1:
+                n = str(abs(self.code[1][x]
+            if self.code[1][x]>0:
+                text =+ ' '+self.code[0][x]+n;
+            elif self.code[1][x]<0:
+                text2 =+ ' '+self.code[0][x]+n;
         
         text = 
         return text
