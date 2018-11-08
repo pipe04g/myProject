@@ -9,22 +9,31 @@ class Unit:
     def __init__(self):
         self.code = [[0,0,0,0,0],[0,0,0,0,0]]
     
-    __str__(self):
-        text = ''
-        text2 =''
+    def __str__(self):
+        U = self.Units;
+        text = '';
+        text2 = '';
         for x in range(0,4):
-            n = ''
+            n = '';
             if abs(self.code[1][x])>1:
-                n = str(abs(self.code[1][x]
+                n = str(abs(self.code[1][x]))
             if self.code[1][x]>0:
-                text =+ ' '+self.code[0][x]+n;
+                text += ' '+U[x][self.code[0][x]]+n;
             elif self.code[1][x]<0:
-                text2 =+ ' '+self.code[0][x]+n;
-        
-        text = text +'/'+text2
+                text2 += ' '+U[x][self.code[0][x]]+n;
+        if text2 != '':
+            text += ' /' + text2
         return text
+    __repr__ = __str__
         
 
+ab = Unit()
+ab.code[0][1]=1
+ab.code[1][1]=1
+ab.code[0][0]=1
+ab.code[1][0]=-2
+ab.code
+print(ab)
 
 class unit:
     def __init__(self,type='L',mult=0):
