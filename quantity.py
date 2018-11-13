@@ -1,38 +1,114 @@
 class Unit:
+    
     Units = {0:{0:'', 1:'m', 2:'cm', 3:'mm', 4:'km', 5:'ft', 6:'in'},
              1:{0:'', 1:'N', 2:'kN', 3:'kgf', 4:'lb', 5:'klb'},
              2:{0:'', 1:'kg', 2:'slug'},
              3:{0:'', 1:'seg'},
-             4:{0:'', 1:'°C', 2:'°F'}
+             4:{0:'', 1:'°C', 2:'°F'},
+             5:{0:'', 1:'Pa', 2:'kPa', 3:'MPa', 4:'psi', 5:'ksi'}
              }
+
     
-    def __init__(self):
-        self.code = [[0,0,0,0,0],[0,0,0,0,0]]
+    def __init__(self,text = '',code=[]):
+        if code ==[]:
+            if text !='':
+                self.code = self.coding(text)
+            else:
+                self.code = self.codedef()
+        else:
+            self.code = code
+    def check(self):
+        code = self.code
+        if (code[0][1]==1 and code[1][1]==1)and(code[0][0]==1 and code[1][0]==-2):
+            for x in range(0,2):
+                for y in range(0,2):
+                    code[x][y]=0
+            code[0][5] = 1 
+            code[1][5] = 1
+            
     
     def __str__(self):
+        return self.forcode(self.code)
+
+    __repr__ = __str__
+
+    def coding(self,text):
+        code = self.codedef()
+        text = text.split('/');
+        for x in range(0,len(text)):
+            textx = text[x].split();
+            for a in textx:
+                n = 1-2*x                    
+                if a[-1].isdigit():
+                    n = int(a[-1])*n
+                    a = a[:-1]
+                for key in self.Units:
+                    for u in self.Units[key]:
+                        if self.Units[key][u] == a:
+                            code[0][key]= u
+                            code[1][key]= n
+                            break
+        return code
+
+    def forcode(self,code):
         U = self.Units;
         text = '';
         text2 = '';
-        for x in range(0,4):
+        for x in range(0,len(U)):
             n = '';
-            if abs(self.code[1][x])>1:
-                n = str(abs(self.code[1][x]))
-            if self.code[1][x]>0:
-                text += ' '+U[x][self.code[0][x]]+n;
-            elif self.code[1][x]<0:
-                text2 += ' '+U[x][self.code[0][x]]+n;
+            if abs(code[1][x])>1:
+                n = str(abs(code[1][x]))
+            if code[1][x]>0:
+                text += ' '+U[x][code[0][x]]+str(n);
+            elif code[1][x]<0:
+                text2 += ' '+U[x][code[0][x]]+str(n);
         if text2 != '':
             text += ' /' + text2
         return text
-    __repr__ = __str__
+    def codedef(self):
+        return [[0]*len(self.Units),[0]*len(self.Units)]
+    
+    def __mul__(self,a):        
+        if type(a) is Unit:
+            ans = self.codedef()
+            for x in range(0,len(ans[0])):
+                if self.code[0][x] == a.code[0][x]:
+                    ans[0][x] = a.code[0][x]
+                    ans[1][x] = a.code[1][x] + self.code[1][x]
+                else:
+                    if a.code[0][x]!=0:
+                        ans[0][x] = a.code[0][x]
+                    else:
+                        ans[0][x] = self.code[0][x]
+                    ans[1][x] = a.code[1][x] + self.code[1][x]
+            ans = Unit(code= ans)
+                    
+
+        else:
+            # Cambiar para que sea como un error.......
+            print('The second argument is not a Unit')
+            return
+        return ans
+    
+            
+            
+                        
+a = '0123/456';
+a = a.split('/');
+for x in range(0,2):
+    print(a[x])
         
 
 ab = Unit()
+ac = Unit()
 ab.code[0][1]=1
 ab.code[1][1]=1
 ab.code[0][0]=1
 ab.code[1][0]=-2
 ab.code
+
+ac.code[0][0]=1
+ac.code[1][0]=2
 print(ab)
 
 class unit:
