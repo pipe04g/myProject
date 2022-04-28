@@ -198,6 +198,24 @@ class quantity:
         return ans
     __radd__ = __add__      
     def __sub__(self,B):
+        if type(a) is quantity:
+            if self.uType() is a.uType():
+                m1 = self.m()
+                m2 = a.m()
+                if m1>m2:
+                    m = m1
+                    unit = self.unit
+                else:
+                    m = m2
+                    unit = a.unit
+                value = self.e()+a.e()
+                value = eval("%fe%d"% (value,-m))
+                ans = quantity(value,unit)
+            else:
+                print('The quantities have diferents units')
+                return
+        else:
+            ans = quantity(self.value-a,self.unit)
         return ans
 
     
@@ -211,6 +229,8 @@ c = quantity(25,unit('L',-3))
 print(a)
 print(b)
 print(a+b)
+print(a-b)
+
 
  
 
